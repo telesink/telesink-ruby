@@ -27,6 +27,8 @@ Gem::Specification.new do |spec|
 
   spec.metadata["rubygems_mfa_required"] = "true"
 
+  spec.add_runtime_dependency "logger", "~> 1.7"
+
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "rake",     "~> 13.0"
 end
