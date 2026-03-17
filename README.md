@@ -1,6 +1,6 @@
 # Telesink SDK for Ruby
 
-Official Ruby client for [telesink.com](https://telesink.com) — real-time event tracking
+Official Ruby client for [telesink.com](https://telesink.com) - real-time event tracking.
 
 ## Requirements
 
@@ -75,4 +75,4 @@ bundle exec rake test
 
 ### License
 
-MIT (see [LICENSE.md]).
+MIT (see [LICENSE.md]()).
