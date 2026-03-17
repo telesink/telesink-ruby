@@ -7,8 +7,6 @@ require "securerandom"
 require "logger"
 
 module Telesink
-  VERSION = "0.1.0"
-
   class Config
     attr_accessor :token, :base_url, :enabled, :logger
 

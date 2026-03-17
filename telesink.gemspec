@@ -1,5 +1,5 @@
 
-require_relative "lib/telesink"
+require_relative "lib/telesink/version"
 
 Gem::Specification.new do |spec|
   spec.name = "telesink"
