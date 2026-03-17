@@ -75,4 +75,4 @@ bundle exec rake test
 
 ### License
 
-MIT (see [LICENSE.md]()).
+MIT (see [LICENSE.md](/LICENSE.md)).
