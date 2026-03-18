@@ -1,5 +1,9 @@
 # Teleisnk Changelog
 
+## 1.0.3 - 2026-04-18
+
+- Changed `TELESINK_BASE_URL` to point at `app.telesink.com`.
+
 ## 1.0.2 - 2026-04-18
 
 - Fixed a bug that prevented Telesink from working due to a missing version require.
