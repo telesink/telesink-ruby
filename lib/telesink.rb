@@ -6,6 +6,8 @@ require "json"
 require "securerandom"
 require "logger"
 
+require_relative "telesink/version"
+
 module Telesink
   class Config
     attr_accessor :token, :base_url, :enabled, :logger
