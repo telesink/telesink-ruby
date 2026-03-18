@@ -13,7 +13,7 @@ module Telesink
     attr_accessor :token, :base_url, :enabled, :logger
 
     def initialize
-      @base_url = ENV.fetch("TELESINK_BASE_URL", "https://telesink.com")
+      @base_url = ENV.fetch("TELESINK_BASE_URL", "https://app.telesink.com")
       @token = ENV["TELESINK_TOKEN"]
       @enabled = true
       @logger = ::Logger.new(STDERR)
