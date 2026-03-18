@@ -40,12 +40,14 @@ module Telesink
       return false unless config.enabled
       return false if config.token.to_s.strip.empty?
 
+      occurred_at = (occurred_at || Time.now).utc.iso8601
+
       payload = {
         event: event,
         text: text,
         emoji: emoji,
         properties: properties,
-        occurred_at: occurred_at&.utc&.iso8601,
+        occurred_at: occurred_at,
         idempotency_key: (idempotency_key.to_s.empty? ? SecureRandom.uuid : idempotency_key),
         sdk: {
           name:    "telesink.ruby",
