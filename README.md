@@ -1,6 +1,7 @@
 # Telesink SDK for Ruby
 
-Official Ruby client for [telesink.com](https://telesink.com) - real-time event tracking.
+Official Ruby client for [telesink.com](https://telesink.com) - real-time event
+tracking.
 
 ## Requirements
 
@@ -10,7 +11,7 @@ Official Ruby client for [telesink.com](https://telesink.com) - real-time event 
 
 ### Install
 
-Add this line to your application's `Gemfile`:
+Add to your `Gemfile`:
 
 ```ruby
 gem "telesink"
@@ -24,24 +25,18 @@ bundle install
 
 ### Configuration
 
-#### Recommended: Environment variables
-
-```sh
-export TELESINK_ENDPOINT=https://app.telesink.com/api/v1/sinks/your_sink_token_here/events
+```rb
+Telesink.init(endpoint: "https://app.telesink.com/api/v1/sinks/your_sink_token_here/events")
 ```
 
-The SDK automatically reads these.
-
-#### Explicit configuration
+Optional params with defaults:
 
 ```rb
-require "telesink"
-
-Telesink.configure do |config|
-  config.endpoint = "https://app.telesink.com/api/v1/sinks/your_sink_token_here/events" # required
-  config.enabled = true # default
-  config.logger = Logger.new(STDERR)
-end
+Telesink.init(
+  endpoint: "...",
+  enabled: true,
+  logger: Logger.new(STDERR)
+)
 ```
 
 ### Usage
@@ -55,21 +50,21 @@ Telesink.track(
     plan: "pro",
     source: "landing_page",
   },
-  occurred_at: Time.now, # optional, auto-converted to UTC ISO8601
-  idempotency_key: "my-custom-key", # optional, auto-generated UUID if omitted
+  occurred_at: Time.now,       # optional, defaults to now
+  idempotency_key: "my-key",   # optional, defaults to random UUID
 )
 ```
 
 #### Returns
 
-- `true` - request was sent
-- `false` - disabled or missing token
+- `true` — event sent successfully
+- `false` — disabled, missing endpoint, or network error
 
-Failures are never raised. They are logged via your configured logger and fail silently.
+Errors are never raised. They are logged and fail silently.
 
 ### Testing
 
-```
+```sh
 bundle exec rake test
 ```
 

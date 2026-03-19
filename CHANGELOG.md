@@ -2,6 +2,9 @@
 
 ## master
 
+- Replaced `Telesink.configure` block with `Telesink.init` for simpler setup.
+- Removed `Config` class. Options are now set directly on the module.
+
 ## 1.1.0 - 2026-04-19
 
 - Merged `TELESINK_BASE_URL` and `TELESINK_TOKEN` into `TELESINK_ENDPOINT`.
