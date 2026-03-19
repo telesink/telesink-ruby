@@ -4,6 +4,7 @@
 
 - Replaced `Telesink.configure` block with `Telesink.init` for simpler setup.
 - Removed `Config` class. Options are now set directly on the module.
+- Added the `TELESINK_DISABLED` environment variable.
 
 ## 1.1.0 - 2026-04-19
 

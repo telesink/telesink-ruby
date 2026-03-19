@@ -25,18 +25,16 @@ bundle install
 
 ### Configuration
 
-```rb
-Telesink.init(endpoint: "https://app.telesink.com/api/v1/sinks/your_sink_token_here/events")
+Set the environment variable:
+
+```sh
+export TELESINK_ENDPOINT=https://app.telesink.com/api/v1/sinks/your_sink_token_here/events
 ```
 
-Optional params with defaults:
+To disable tracking (e.g. in test/dev):
 
-```rb
-Telesink.init(
-  endpoint: "...",
-  enabled: true,
-  logger: Logger.new(STDERR)
-)
+```sh
+export TELESINK_DISABLED=true
 ```
 
 ### Usage
@@ -50,8 +48,8 @@ Telesink.track(
     plan: "pro",
     source: "landing_page",
   },
-  occurred_at: Time.now,       # optional, defaults to now
-  idempotency_key: "my-key",   # optional, defaults to random UUID
+  occurred_at: Time.now,     # optional, defaults to now
+  idempotency_key: "my-key", # optional, defaults to random UUID
 )
 ```
 
@@ -60,7 +58,7 @@ Telesink.track(
 - `true` — event sent successfully
 - `false` — disabled, missing endpoint, or network error
 
-Errors are never raised. They are logged and fail silently.
+Errors are never raised. They are logged to STDERR and fail silently.
 
 ### Testing
 

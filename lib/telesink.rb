@@ -12,14 +12,8 @@ module Telesink
   LOG = ::Logger.new(STDERR)
 
   class << self
-    def init(endpoint:, enabled: true, logger: LOG)
-      @endpoint = endpoint
-      @enabled = enabled
-      @logger = logger
-    end
-
     def track(event:, text:, emoji: nil, properties: {}, occurred_at: nil, idempotency_key: nil)
-      return false unless @enabled && @endpoint
+      return false unless enabled? && endpoint
 
       payload = {
         event: event,
@@ -31,7 +25,7 @@ module Telesink
         sdk: { name: "telesink.ruby", version: VERSION }
       }.compact
 
-      uri = URI(@endpoint)
+      uri = URI(endpoint)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme == "https"
       http.open_timeout = http.read_timeout = 3
@@ -45,8 +39,14 @@ module Telesink
 
       http.request(req).is_a?(Net::HTTPSuccess)
     rescue => e
-      @logger.error("[Telesink] #{e.class}: #{e.message}")
+      logger.error("[Telesink] #{e.class}: #{e.message}")
       false
     end
+
+    private
+
+    def endpoint = ENV["TELESINK_ENDPOINT"]
+    def enabled? = ENV["TELESINK_DISABLED"].to_s.empty?
+    def logger = LOG
   end
 end

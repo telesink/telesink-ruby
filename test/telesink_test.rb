@@ -5,29 +5,34 @@ require_relative "../lib/telesink"
 
 class TelesinkTest < Minitest::Test
   def setup
-    Telesink.instance_variable_set(:@endpoint, nil)
-    Telesink.instance_variable_set(:@enabled, nil)
-    Telesink.instance_variable_set(:@logger, nil)
-  end
-
-  def test_init_sets_endpoint
-    Telesink.init(endpoint: "https://example.com/events")
-    assert_equal "https://example.com/events", Telesink.instance_variable_get(:@endpoint)
-  end
-
-  def test_init_defaults
-    Telesink.init(endpoint: "https://example.com/events")
-    assert Telesink.instance_variable_get(:@enabled)
-    assert_instance_of ::Logger, Telesink.instance_variable_get(:@logger)
-  end
-
-  def test_track_returns_false_when_disabled
-    Telesink.init(endpoint: "https://example.com/events", enabled: false)
-    assert_equal false, Telesink.track(event: "test", text: "hello")
+    ENV.delete("TELESINK_ENDPOINT")
+    ENV.delete("TELESINK_DISABLED")
   end
 
   def test_track_returns_false_without_endpoint
-    Telesink.init(endpoint: nil)
     assert_equal false, Telesink.track(event: "test", text: "hello")
+  end
+
+  def test_track_returns_false_when_disabled
+    ENV["TELESINK_ENDPOINT"] = "https://example.com/events"
+    ENV["TELESINK_DISABLED"] = "true"
+    assert_equal false, Telesink.track(event: "test", text: "hello")
+  end
+
+  def test_track_sends_event
+    ENV["TELESINK_ENDPOINT"] = "https://example.com/events"
+
+    response = Minitest::Mock.new
+    response.expect(:is_a?, true, [Net::HTTPSuccess])
+
+    http = Minitest::Mock.new
+    http.expect(:use_ssl=, nil, [true])
+    http.expect(:open_timeout=, nil, [3])
+    http.expect(:read_timeout=, nil, [3])
+    http.expect(:request, response, [Net::HTTP::Post])
+
+    Net::HTTP.stub(:new, http) do
+      assert_equal true, Telesink.track(event: "test", text: "hello")
+    end
   end
 end
