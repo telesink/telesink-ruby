@@ -1,5 +1,7 @@
 # Telesink SDK for Ruby
 
+**Know what your product is doing. Right now.**
+
 Official Ruby client for [telesink.com](https://telesink.com) - real-time event
 tracking.
 
