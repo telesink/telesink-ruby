@@ -1,5 +1,11 @@
 # Teleisnk Changelog
 
+## master
+
+- Merged `TELESINK_BASE_URL` and `TELESINK_TOKEN` into `TELESINK_ENDPOINT`.
+  Technically, this is a breaking change, but since the backend isn't live yet,
+  nobody cares.
+
 ## 1.0.3 - 2026-04-18
 
 - Changed `TELESINK_BASE_URL` to point at `app.telesink.com`.

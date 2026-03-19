@@ -10,11 +10,10 @@ require_relative "telesink/version"
 
 module Telesink
   class Config
-    attr_accessor :token, :base_url, :enabled, :logger
+    attr_accessor :endpoint, :enabled, :logger
 
     def initialize
-      @base_url = ENV.fetch("TELESINK_BASE_URL", "https://app.telesink.com")
-      @token = ENV["TELESINK_TOKEN"]
+      @endpoint = ENV["TELESINK_ENDPOINT"]
       @enabled = true
       @logger = ::Logger.new(STDERR)
     end
@@ -40,9 +39,10 @@ module Telesink
       idempotency_key: nil
     )
       return false unless config.enabled
-      return false if config.token.to_s.strip.empty?
+      return false if config.endpoint.to_s.empty?
 
       occurred_at = (occurred_at || Time.now).utc.iso8601
+      idempotency_key = (idempotency_key.to_s.empty? ? SecureRandom.uuid : idempotency_key)
 
       payload = {
         event: event,
@@ -50,9 +50,9 @@ module Telesink
         emoji: emoji,
         properties: properties,
         occurred_at: occurred_at,
-        idempotency_key: (idempotency_key.to_s.empty? ? SecureRandom.uuid : idempotency_key),
+        idempotency_key: idempotency_key,
         sdk: {
-          name:    "telesink.ruby",
+          name: "telesink.ruby",
           version: VERSION
         }
       }.compact
@@ -79,8 +79,7 @@ module Telesink
     end
 
     def send_event(payload, idempotency_key)
-      uri = URI("#{config.base_url}/api/v1/sinks/#{config.token}/events")
-
+      uri = URI(config.endpoint)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       http.open_timeout = 3
@@ -93,13 +92,11 @@ module Telesink
       request["Idempotency-Key"] = idempotency_key
 
       request.body = payload.to_json
-
       response = http.request(request)
 
       unless response.is_a?(Net::HTTPSuccess)
         config.logger.warn("[Telesink] API returned #{response.code} for event '#{payload[:event]}'")
       end
-
       response
     end
   end
