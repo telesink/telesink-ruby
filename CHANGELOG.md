@@ -2,6 +2,8 @@
 
 ## master
 
+## 1.1.0 - 2026-04-19
+
 - Merged `TELESINK_BASE_URL` and `TELESINK_TOKEN` into `TELESINK_ENDPOINT`.
   Technically, this is a breaking change, but since the backend isn't live yet,
   nobody cares.
