@@ -42,11 +42,11 @@ export TELESINK_DISABLED=true
 ```rb
 Telesink.track(
   event: "user.signed.up",
-  text: "New user registered",
+  text: "user@example.com",
   emoji: "👤",
   properties: {
-    plan: "pro",
-    source: "landing_page",
+    user_id: 123,
+    email_address: "user@example.com",
   },
   occurred_at: Time.now,     # optional, defaults to now
   idempotency_key: "my-key", # optional, defaults to random UUID
