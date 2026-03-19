@@ -24,12 +24,10 @@ bundle install
 
 ### Configuration
 
-#### Recommended: Environment Variables (zero-code setup)
+#### Recommended: Environment variables
 
 ```sh
-export TELESINK_TOKEN=your_sink_token_here
-# Optional:
-# export TELESINK_BASE_URL=https://custom.telesink.com
+export TELESINK_ENDPOINT=https://app.telesink.com/api/v1/sinks/your_sink_token_here/events
 ```
 
 The SDK automatically reads these.
@@ -40,9 +38,8 @@ The SDK automatically reads these.
 require "telesink"
 
 Telesink.configure do |config|
-  config.token = <sink-token>              # required
-  config.base_url = "https://telesink.com" # default
-  config.enabled = true                    # default
+  config.endpoint = "https://app.telesink.com/api/v1/sinks/your_sink_token_here/events" # required
+  config.enabled = true # default
   config.logger = Logger.new(STDERR)
 end
 ```
@@ -53,10 +50,13 @@ end
 Telesink.track(
   event: "user.signed.up",
   text: "New user registered",
-  emoji: "🎉",
-  properties: { plan: "pro", source: "landing_page" },
+  emoji: "👤",
+  properties: {
+    plan: "pro",
+    source: "landing_page",
+  },
   occurred_at: Time.now, # optional, auto-converted to UTC ISO8601
-  idempotency_key: "my-custom-key" # optional, auto-generated UUID if omitted
+  idempotency_key: "my-custom-key", # optional, auto-generated UUID if omitted
 )
 ```
 
