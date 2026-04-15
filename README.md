@@ -5,6 +5,9 @@
 Official Ruby client for [telesink.com](https://telesink.com) - real-time event
 tracking.
 
+**Note**: Low activity here doesn’t mean this is abandoned. It’s intentionally
+simple, so there’s not much to change.
+
 ## Requirements
 
 - Ruby 3.0+
