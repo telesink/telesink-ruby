@@ -43,7 +43,7 @@ export TELESINK_DISABLED=true
 
 ```rb
 Telesink.track(
-  event: "user.signed.up",
+  event: "User signed up",
   text: "user@example.com",
   emoji: "👤",
   properties: {
