@@ -2,6 +2,8 @@
 
 ## master
 
+## 1.3.0 - 2026-04-19
+
 - Added optional `endpoint:` keyword argument to `Telesink.track`.
   This allows separate integrations to send events to a different sink while
   keeping the core SDK unchanged and backward-compatible.
