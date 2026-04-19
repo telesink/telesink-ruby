@@ -12,8 +12,11 @@ module Telesink
   LOG = ::Logger.new(STDERR)
 
   class << self
-    def track(event:, text:, emoji: nil, properties: {}, occurred_at: nil, idempotency_key: nil)
-      return false unless enabled? && endpoint
+    def track(
+      event:, text:, emoji: nil, properties: {}, occurred_at: nil,
+      idempotency_key: nil, endpoint: nil
+    )
+      return false unless enabled? && (endpoint || self.endpoint)
 
       payload = {
         event: event,
@@ -25,7 +28,7 @@ module Telesink
         sdk: { name: "telesink.ruby", version: VERSION }
       }.compact
 
-      uri = URI(endpoint)
+      uri = URI(endpoint || self.endpoint)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme == "https"
       http.open_timeout = http.read_timeout = 3

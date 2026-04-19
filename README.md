@@ -58,6 +58,26 @@ Telesink.track(
 )
 ```
 
+**Optional: Sending to a different sink**
+
+Integrations (like
+[`telesink-activejob`](https://github.com/telesink/telesink-activejob)) can send
+events to a separate sink:
+
+```rb
+Telesink.track(
+  event: "Job succeeded",
+  text: "ProcessUserData",
+  emoji: "✅",
+  properties: {
+    duration_ms: 420
+  },
+
+  # falls back to TELESINK_ENDPOINT if not set
+  endpoint: ENV["TELESINK_ACTIVEJOB_ENDPOINT"]
+)
+```
+
 #### Returns
 
 - `true` — event sent successfully
