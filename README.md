@@ -33,7 +33,7 @@ bundle install
 Set the environment variable:
 
 ```sh
-export TELESINK_ENDPOINT=https://app.telesink.com/api/v1/sinks/your_sink_token_here/events
+export TELESINK_ENDPOINT="https://app.telesink.com/api/v1/sinks/your_sink_token_here/events"
 ```
 
 To disable tracking (e.g. in test/dev):
